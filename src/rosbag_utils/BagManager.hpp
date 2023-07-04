@@ -21,16 +21,10 @@ public:
    * @brief Construct a new Bag Manager object
    *
    * @param bag_in_path
-   * @param bag_out_path
    */
-  BagManager(std::string bag_in_path, std::string bag_out_path = std::string())
-      : bag_in_path_(bag_in_path), bag_out_path_(bag_out_path) {
-    if (bag_out_path_.empty()) { // append "new_" to the bag name
-      bag_out_path_ = bag_in_path_;
-      bag_out_path_.insert(bag_out_path_.find_last_of('.'), "_new");
-    }
+  BagManager(std::string bag_in_path)
+      : bag_in_path_(bag_in_path) {
     bag_in_.open(bag_in_path, rosbag::BagMode::Read);
-    bag_out_.open(bag_out_path_, rosbag::BagMode::Write);
   }
 
   /**
@@ -132,6 +126,13 @@ public:
       msgs.push_back(*m.instantiate<T>());
     }
   }
+
+
+  void setBagOutPath(std::string bag_out_path) {
+    bag_out_path_ = bag_out_path;
+    bag_out_.open(bag_out_path_, rosbag::BagMode::Write);
+  }
+
 
   /**
    * @brief write a new bag file with only the specified topic name changed
