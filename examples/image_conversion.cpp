@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sensor_msgs/Imu.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <experimental/filesystem>
 
 int main() {
 
@@ -11,6 +12,7 @@ int main() {
   bag1.printInfo();
 
   std::string save_path("/home/hj/" + bag1.getBagFileName());
+  std::experimental::filesystem::create_directory(save_path);
 
   std::vector<sensor_msgs::Imu> imu_msgs;
   bag1.getMessages(imu_msgs, "/camera/imu");
