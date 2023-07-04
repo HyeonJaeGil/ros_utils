@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(ros_utils)
 
+set (CMAKE_CXX_STANDARD 17)
+set (CMAKE_CXX_FLAGS "-O3 -Wall -Wextra -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-unused")
+
 find_package(OpenCV REQUIRED)
 find_package(PCL REQUIRED)
 
@@ -21,10 +24,13 @@ include_directories(
   ${PCL_INCLUDE_DIRS}
 )
 
-list(APPEND LIBS ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PCL_LIBRARIES})
+list(APPEND LIBS ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PCL_LIBRARIES} stdc++fs)
 
 add_executable(concat_rosbag examples/concat_rosbag.cpp)
 target_link_libraries(concat_rosbag ${LIBS})
 
 add_executable(image_conversion examples/image_conversion.cpp)
 target_link_libraries(image_conversion ${LIBS})
+
+add_executable(rosbag2files examples/rosbag2files.cpp)
+target_link_libraries(rosbag2files ${LIBS})
