@@ -26,11 +26,6 @@ include_directories(
 
 list(APPEND LIBS ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PCL_LIBRARIES} stdc++fs)
 
-add_executable(concat_rosbag examples/concat_rosbag.cpp)
-target_link_libraries(concat_rosbag ${LIBS})
-
-add_executable(image_conversion examples/image_conversion.cpp)
-target_link_libraries(image_conversion ${LIBS})
 
 add_executable(rosbag2files examples/rosbag2files.cpp)
 target_link_libraries(rosbag2files ${LIBS})
