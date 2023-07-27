@@ -33,7 +33,8 @@ public:
    */
   ~BagManager() {
     bag_in_.close();
-    bag_out_.close();
+    if (bag_out_.isOpen()) 
+      bag_out_.close();
   }
 
   /**
@@ -57,11 +58,21 @@ public:
   }
 
   /**
-   * @brief Get the Bag File Name object
+   * @brief Get the Bag File Dir Name object
+   * 
+   * @return std::string directory name of bag file
+   */
+  std::string getBagFileDirName() const {
+    std::string bag_dir = bag_in_path_.substr(0, bag_in_path_.find_last_of("/"));
+    return bag_dir;
+  }
+
+  /**
+   * @brief Get the Bag File Base Name object
    *
    * @return std::string basename of bag file (without extension)
    */
-  std::string getBagFileName() const {
+  std::string getBagFileBaseName() const {
     std::string bag_name = bag_in_path_.substr(bag_in_path_.find_last_of("/") + 1);
     bag_name = bag_name.substr(0, bag_name.find_last_of("."));
     return bag_name;
@@ -127,37 +138,6 @@ public:
     }
   }
 
-
-  void setBagOutPath(std::string bag_out_path) {
-    bag_out_path_ = bag_out_path;
-    bag_out_.open(bag_out_path_, rosbag::BagMode::Write);
-  }
-
-
-  /**
-   * @brief write a new bag file with only the specified topic name changed
-   *
-   * @param old_topic_name std::string old topic name
-   * @param new_topic_name std::string new topic name
-   */
-  void changeTopicName(std::string old_topic_name, std::string new_topic_name) {
-    for (const auto &m : rosbag::View(bag_in_)) {
-      if (m.getTopic() == old_topic_name) {
-        bag_out_.write(new_topic_name, m.getTime(), m, m.getConnectionHeader());
-      } else {
-        bag_out_.write(m.getTopic(), m.getTime(), m, m.getConnectionHeader());
-      }
-    }
-  }
-
-  /**
-   * @brief write a new bag file with only the frame id of specified topic name changed
-   *
-   * @param topic_name std::string topic name to be changed
-   * @param new_frame_id std::string new frame id
-   */
-  void changeFrameIdOfTopic(std::string topic_name, std::string new_frame_id);
-
   /**
    * @brief split the bag file into two parts, based on the split time
    *
@@ -182,7 +162,36 @@ public:
   }
 
   /**
-   * @brief crop the bag file with the specified start and end time
+   * @brief Set the Bag Out Path object (TODO)
+   * 
+   * @param bag_out_path std::string bag file path
+   */
+  void setBagOutPath(std::string bag_out_path){
+    cout << "Not implemented Yet" << endl;
+  }
+
+  /**
+   * @brief write a new bag file with only the specified topic name changed (TODO)
+   *
+   * @param old_topic_name std::string old topic name
+   * @param new_topic_name std::string new topic name
+   */
+  void changeTopicName(std::string old_topic_name, std::string new_topic_name) {
+    cout << "Not implemented Yet" << endl;
+  }
+
+  /**
+   * @brief write a new bag file with only the frame id of specified topic name changed (TODO)
+   *
+   * @param topic_name std::string topic name to be changed
+   * @param new_frame_id std::string new frame id
+   */
+  void changeFrameIdOfTopic(std::string topic_name, std::string new_frame_id) {
+    cout << "Not implemented Yet" << endl;
+  }
+
+  /**
+   * @brief crop the bag file with the specified start and end time (TODO)
    *
    * @param bag_out_path std::string bag file path of the cropped bag file
    * @param start_time start time [in seconds]
@@ -212,4 +221,5 @@ private:
   rosbag::Bag bag_in_;
   std::string bag_out_path_;
   rosbag::Bag bag_out_;
+  unsigned int tmp_count_ = 0;
 };
