@@ -27,5 +27,5 @@ include_directories(
 list(APPEND LIBS ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PCL_LIBRARIES} stdc++fs)
 
 
-add_executable(rosbag2timestamps examples/rosbag2timestamps.cpp)
-target_link_libraries(rosbag2timestamps ${LIBS})
+add_executable(rosbag2files examples/rosbag2files.cpp)
+target_link_libraries(rosbag2files ${LIBS})
