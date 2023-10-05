@@ -29,3 +29,5 @@ list(APPEND LIBS ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PCL_LIBRARIES} stdc++
 
 add_executable(rosbag2files examples/rosbag2files.cpp)
 target_link_libraries(rosbag2files ${LIBS})
+add_executable(subscriber examples/subscriber.cpp)
+target_link_libraries(subscriber ${LIBS})
